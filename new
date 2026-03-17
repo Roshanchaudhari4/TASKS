@@ -1,0 +1,98 @@
+let a = `
+                                  
+                     ELECTROLAB FRIABILITY TESTER                    .
+                              TEST REPORT                             
+
+     MODEL NO.          : EF2W                 VERSION NO  : V3.0  
+
+     DATE               : 08/04/2022           TIME         :13:05:58
+
+     SERIAL NO.         : 2111020              INSTRUMENT ID:TL-360    
+
+     WEIGHING SCALE     : CONTECH        
+
+     USER               : ________             METHOD      : ABC               
+
+     DRUG NAME/A.R.NO.D1: 32513                BN D1       : GD1234    
+
+     DRUG NAME/A.R.NO.D2: 2543                 BN D2       : 9432      
+
+     SET RPM            : 25                   SET COUNT   : 0100
+
+     TYPE OF DRUM       : FRIABILITY           NO. OF DRUMS: 2
+
+     FRIABILITY LIMIT   : 1.0 %
+
+
+                 INTERVAL                    ACTUAL RPM
+
+                   0010                       025.1
+
+                   0020                       025.1
+
+                   0030                       025.1
+
+                   0040                       025.1
+
+                   0050                       025.1
+
+                   0060                       025.1
+
+                   0070                       025.1
+
+                   0080                       025.1
+
+                   0090                       025.1
+
+                   0100                       025.1
+
+     CALCULATIONS :                  DRUM-1              |             DRUM-2            
+
+     WEIGHT BEFORE TEST : 004.9990 g  |  WEIGHT BEFORE TEST : 004.9990 g
+
+     WEIGHT AFTER TEST  : 004.9000 g  |  WEIGHT AFTER TEST  : 004.9000 g
+
+     FRIABILITY         : 00.02000 %  |  FRIABILITY         : 00.02000 % 
+
+     DRUM 1 TEST PASS                 |  DRUM 2 TEST PASS      .......
+
+    Initial Wg < Final Wg             |    Initial Wg < Final Wg  
+
+     COMMENTS           :___________________________________..........
+
+     SIGNATURE          :___________________________________..........
+                           PAGE 1/1
+.`
+
+let lines = a.split("\n");
+
+let before = [];
+let after = [];
+
+for (let i = 0; i < lines.length; i++) {
+
+    if (lines[i].includes("WEIGHT BEFORE TEST")) {
+        let parts = lines[i].split(":");
+
+        for (let j = 1; j < parts.length; j++) {
+            before.push(parseFloat(parts[j]));
+        }
+    }
+
+    if (lines[i].includes("WEIGHT AFTER TEST")) {
+        let parts = lines[i].split(":");
+
+        for (let j = 1; j < parts.length; j++) {
+            after.push(parseFloat(parts[j]));
+        }
+    }
+}
+
+// output
+for (let i = 0; i < before.length; i++) {
+    console.log(
+        "  Before: " + before[i].toFixed(4) + 
+        " After: " + after[i].toFixed(4) + 
+        " Loss: " + (before[i] - after[i]).toFixed(4)
+    );
+}

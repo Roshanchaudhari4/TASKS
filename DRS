@@ -1,0 +1,158 @@
+var a = `
+****************************************
+* GLENMARK INDORE                      *
+* 8M Dr.Schleuniger Pharmatron AG V2.38*
+****************************************
+
+ Product Name    : VALSARTAN 40MG
+ Product Number  : 1120671
+ Batch ID        : 1120671
+ Press ID        : Vm0303
+ Container No.   : 00
+ Comment         : SETUP QA
+ Operator Name   : TEVA PRDN
+ UD Factor       : 1.00
+
+ Selected Prod.# : 1
+ Teststamp#      : 1150
+ Serial#         : 03236-WTDH-03236
+ Test Start at   : 08.11.2012 15:39:51
+ Test End at     : aborted
+
+
+ Parameter                     Hardness
+ Units of Meas.                 [ N]
+----------------------------------------
+ Sample Size                      2
+
+ Cal. Date                    30.05.2012
+ Cal. Due Date                30.11.2012
+ Ver. Due Date                30.11.2012
+
+ Classifications
+ -----------------
+ Nominal                        139
+ Pl high                       + 79.86%
+ Pl low                        - 35.25%
+ T1 high                       + 18.71%
+ T1 low                        - 16.55%
+ T2 high                       + 21.58%
+ T2 low                        - 21.58%
+
+ Statistics
+ ------------
+ sum(Xi)/n                      101 ®
+ Xmax                           101
+ Xmin                           101
+ Xmax-Xmin                        0
+ Sabs                             0.0
+ Srel                             0.0%
+ T1 Viol.                         0
+ T2 Viol.                         1
+
+
+ Parameter                     Hardness
+ Units of Meas.                 [ N]
+----------------------------------------
+ Measurements
+ ------------
+ Valid Samples                    1
+
+         n
+         1                       44                    !
+         2                       43 !
+         3                       44 !
+         4                       38 !
+         5                       42 !
+         6                       54 !
+         7                       48 !
+         8                       50 !
+         9                       42 !
+        10                       48 !
+
+
+
+
+
+
+ Signature : ____________ Date  : ______
+
+
+
+
+
+
+
+
+`
+
+
+var lines = a.split("\n");
+
+var Finalresult = [];
+
+ for(var i = 0; i < lines.length ; i++){
+
+    var line = lines[i].trim();
+    console.log(line)
+    
+
+    if(line.includes("Product Name")){
+         var ProductName = line.split(":")[1].trim()
+         Finalresult.push({ProductName : ProductName})
+     }
+     
+     if(line.includes("Product Number")){
+         var ProductNumber = line.split(":")[1].trim()
+         Finalresult.push({ProductNumber : ProductNumber})
+     }
+     
+     if(line.includes("Batch ID ")){
+         var BatchID  = line.split(":")[1].trim()
+         Finalresult.push({BatchID  : BatchID })
+     }
+     
+      if(line.includes("Press ID")){
+         var PressID  = line.split(":")[1].trim()
+         Finalresult.push({PressID  : PressID })
+     }
+     
+     if(line.includes("Container No.")){
+         var ContainerNo  = line.split(":")[1].trim()
+         Finalresult.push({ContainerNo  : ContainerNo })
+     }
+     
+      if(line.includes("Operator Name")){
+         var OperatorName  = line.split(":")[1].trim()
+         Finalresult.push({OperatorName  : OperatorName })
+     }
+     
+     
+    if(line.includes("!")){    // jithe ! asel ti line geychi
+
+    var part = line.split("!")[0];      // split kraychi line
+
+    var arr = part.trim().split(" ");    // space chya basis var split karaychi
+
+    var Result = [];
+    
+    for(var j = 0; j < arr.length; j++){
+        if(arr[j] !== ""){   // check krte ki empty space ahe ka asel tar skip only valid value ch store hotil
+            Result.push(arr[j])
+        }
+    }
+
+    Finalresult.push({              // final array madhe push jar o dele t 1 chi line yeil 1 2 3 4 1 ha index 44 43 44 yancha ahe
+        SampleNo : Result[0],
+        ValidSample : Result[1]
+    })
+}
+
+    
+
+}
+// Finalresult.push({TempMinBath : arr[23]})
+
+
+
+ console.log(Finalresult)
